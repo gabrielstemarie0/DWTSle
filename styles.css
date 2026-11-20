@@ -61,10 +61,10 @@ header,main{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){.beam{animation:none}}
 /* ---- logo ---- */
 .logo{margin:0;display:flex;align-items:center;justify-content:center;gap:.4em;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:900;font-size:clamp(2.4rem,9vw,4.6rem);line-height:1;letter-spacing:.01em}
-.logo .word{display:inline-flex;align-items:center;background:linear-gradient(100deg,#fff8d6 0%,#f0cf6a 22%,#b8862b 42%,#f4f4fa 58%,#a9aec2 78%,#e9ebf5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 0 #3b2a05) drop-shadow(0 0 18px #e8c35a66);padding:0 .05em}
+.logo .word{display:inline-block;background:linear-gradient(100deg,#fff8d6 0%,#f0cf6a 22%,#b8862b 42%,#f4f4fa 58%,#a9aec2 78%,#e9ebf5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 0 #3b2a05) drop-shadow(0 0 18px #e8c35a66);padding:0 .05em}
 .logo .star{color:#f0cf6a;font-size:.35em;filter:drop-shadow(0 0 8px #f0cf6a);animation:tw 2.4s ease-in-out infinite alternate}
 .logo .s2{animation-delay:1.2s;color:#e9ebf5}
-.mball{display:inline-block;position:relative;width:.72em;height:.72em;margin:0 .04em;border-radius:50%;-webkit-text-fill-color:initial;background:radial-gradient(circle at 34% 28%,#fff,#d5d7e4 26%,#7d8095 62%,#2c2c3a);box-shadow:0 0 22px 4px #ffffff55,0 0 40px 8px #e8c35a33;filter:none}
+.mball{display:inline-block;position:relative;vertical-align:baseline;width:.56em;height:.56em;margin:0 .03em -.02em;border-radius:50%;-webkit-text-fill-color:initial;background:radial-gradient(circle at 34% 28%,#fff,#d5d7e4 26%,#7d8095 62%,#2c2c3a);box-shadow:0 0 22px 4px #ffffff55,0 0 40px 8px #e8c35a33;filter:none}
 .mball::before{content:"";position:absolute;left:50%;bottom:100%;width:2px;height:120px;background:linear-gradient(#0000,#e9ebf5aa)}
 .mball::after{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(0deg,#0007 0 1px,transparent 1px 7px),repeating-linear-gradient(90deg,#0007 0 1px,transparent 1px 7px),radial-gradient(circle at 70% 70%,#e8c35a55,transparent 50%);animation:tw 2.4s ease-in-out infinite alternate}
 @keyframes tw{from{opacity:.55}to{opacity:1}}
