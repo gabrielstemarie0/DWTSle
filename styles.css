@@ -89,8 +89,8 @@ header{padding-top:84px}
 .sub{margin:1.1rem 0 1rem}
 
 /* ---- photos ---- */
-.av{width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:50% 20%;flex:none;border:2px solid #e8c35a;background:#2a2140;box-shadow:0 0 8px #e8c35a44}
+.av{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:50% 50%;flex:none;border:2px solid #e8c35a;background:#2a2140;box-shadow:0 0 8px #e8c35a44}
 .av.ini{display:grid;place-items:center;font-size:.72rem;font-weight:700;color:#e8c35a;letter-spacing:.02em}
 .row .name{justify-content:flex-start;gap:8px;text-align:left}
 #options li .who{display:flex;align-items:center;gap:10px;min-width:0}
-#options li .av{width:32px;height:32px}
+#options li .av{width:36px;height:36px}
