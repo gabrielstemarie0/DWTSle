@@ -4,6 +4,14 @@
   const input = $("guess"), list = $("options"), grid = $("grid"), statusEl = $("status");
   const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, "");
 
+  const PH = window.PHOTOS || {};
+  function avatar(n) {
+    const src = PH[n];
+    if (src) { const i = document.createElement("img"); i.className = "av"; i.src = src; i.alt = ""; i.loading = "lazy"; return i; }
+    const s = document.createElement("span"); s.className = "av ini";
+    s.textContent = n.split(" ").map((w) => w[0]).slice(0, 2).join(""); return s;
+  }
+
   // ----- state -----
   const dayKey = () => { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
   const hash = (s) => { let h = 2166136261; for (const ch of s) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; };
@@ -54,7 +62,10 @@
     compare(g).forEach((c, i) => {
       const d = document.createElement("div");
       d.className = c.cls + (c.name ? " name" : "") + (animate ? " flip" : "");
-      d.style.setProperty("--i", i); d.textContent = c.text; row.appendChild(d);
+      d.style.setProperty("--i", i);
+      if (c.name) { d.appendChild(avatar(g.n)); const t = document.createElement("span"); t.textContent = c.text; d.appendChild(t); }
+      else d.textContent = c.text;
+      row.appendChild(d);
     });
     grid.querySelector(".head").after(row);
     if (g === answer) finish(true);
@@ -78,7 +89,7 @@
     list.innerHTML = ""; sel = matches.length ? 0 : -1;
     matches.forEach((m, i) => {
       const li = document.createElement("li"); li.setAttribute("role", "option"); li.setAttribute("aria-selected", i === sel);
-      li.innerHTML = `<span></span><small>S${m.s}</small>`; li.firstChild.textContent = m.n;
+      li.innerHTML = `<span class="who"><b></b></span><small>S${m.s}</small>`; li.querySelector(".who").prepend(avatar(m.n)); li.querySelector("b").textContent = m.n;
       li.addEventListener("mousedown", (e) => { e.preventDefault(); submit(m); });
       list.appendChild(li);
     });
