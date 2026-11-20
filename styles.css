@@ -55,11 +55,35 @@ header,main{position:relative;z-index:1}
 .b2{left:33%;background:linear-gradient(rgba(255,120,200,.3),transparent 92%);animation:sway 11s ease-in-out infinite alternate-reverse}
 .b3{right:6%;background:linear-gradient(rgba(110,200,255,.3),transparent 92%);animation:sway 10s ease-in-out infinite alternate}
 @keyframes sway{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
-.ball{position:absolute;top:44px;left:50%;width:64px;height:64px;margin-left:-32px;border-radius:50%;background:radial-gradient(circle at 34% 28%,#fff,#c9c9d6 28%,#6d6d80 66%,#2c2c3a);box-shadow:0 0 40px 8px #ffffff40}
-.ball::before{content:"";position:absolute;left:50%;bottom:100%;width:2px;height:60px;background:#aaa8}
-.ball::after{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(0deg,#0006 0 1px,transparent 1px 8px),repeating-linear-gradient(90deg,#0006 0 1px,transparent 1px 8px);animation:glint 3s linear infinite alternate}
-@keyframes glint{from{opacity:.55}to{opacity:1}}
 .floor{position:absolute;left:-10%;right:-10%;bottom:0;height:26%;background:linear-gradient(#0000,#000a 95%),repeating-linear-gradient(90deg,#4d2f1b 0 70px,#3a2213 70px 72px),#3a2213;transform:perspective(420px) rotateX(48deg);transform-origin:50% 100%;border-top:2px solid #c9a22780}
 .pool{position:absolute;left:12%;right:12%;top:0;bottom:0;background:radial-gradient(ellipse at 50% 20%,#ffe8a655,transparent 65%)}
 .scroller{background:#0b0618c0;border:1px solid var(--line);border-radius:12px;padding:10px;backdrop-filter:blur(3px)}
-@media(prefers-reduced-motion:reduce){.beam,.ball::after{animation:none}}
+@media(prefers-reduced-motion:reduce){.beam{animation:none}}
+/* ---- logo ---- */
+.logo{margin:0;display:flex;align-items:center;justify-content:center;gap:.4em;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:900;font-size:clamp(2.4rem,9vw,4.6rem);line-height:1;letter-spacing:.01em}
+.logo .word{display:inline-flex;align-items:center;background:linear-gradient(100deg,#fff8d6 0%,#f0cf6a 22%,#b8862b 42%,#f4f4fa 58%,#a9aec2 78%,#e9ebf5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 0 #3b2a05) drop-shadow(0 0 18px #e8c35a66);padding:0 .05em}
+.logo .star{color:#f0cf6a;font-size:.35em;filter:drop-shadow(0 0 8px #f0cf6a);animation:tw 2.4s ease-in-out infinite alternate}
+.logo .s2{animation-delay:1.2s;color:#e9ebf5}
+.mball{display:inline-block;position:relative;width:.72em;height:.72em;margin:0 .04em;border-radius:50%;-webkit-text-fill-color:initial;background:radial-gradient(circle at 34% 28%,#fff,#d5d7e4 26%,#7d8095 62%,#2c2c3a);box-shadow:0 0 22px 4px #ffffff55,0 0 40px 8px #e8c35a33;filter:none}
+.mball::before{content:"";position:absolute;left:50%;bottom:100%;width:2px;height:120px;background:linear-gradient(#0000,#e9ebf5aa)}
+.mball::after{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(0deg,#0007 0 1px,transparent 1px 7px),repeating-linear-gradient(90deg,#0007 0 1px,transparent 1px 7px),radial-gradient(circle at 70% 70%,#e8c35a55,transparent 50%);animation:tw 2.4s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:.55}to{opacity:1}}
+.sub{font-family:Cinzel,Georgia,serif;font-weight:500;letter-spacing:.2em;text-transform:uppercase;font-size:.72rem;color:#d9dbe6}
+header{padding-top:84px}
+/* ---- gold & silver stage ---- */
+.stage{background:radial-gradient(ellipse at 50% 18%,#3b2d10 0,#150f26 45%,#05030c 100%)}
+.curtain{background:repeating-linear-gradient(90deg,#7a5410 0 9px,#e8c35a 9px 15px,#fff3b8 15px 18px,#b8862b 18px 26px,#8e93a8 26px 30px,#f1f2fa 30px 33px,#6c7188 33px 38px)}
+.curtain::after{background:linear-gradient(90deg,#000b,transparent 40%,#000b),linear-gradient(#0000,#0008 92%)}
+.valance{background:linear-gradient(#6b4a0e,#e8c35a 45%,#9a6f1c);border-bottom:3px solid #f1f2fa;box-shadow:0 6px 20px #000b,0 0 30px #e8c35a44}
+.valance::after{background:radial-gradient(circle at 20px 0,#c9a227 17px,#f1f2fa 17px 19px,transparent 19.5px) 0 0/40px 18px repeat-x}
+.b1{background:linear-gradient(rgba(255,226,140,.5),transparent 92%)}
+.b2{background:linear-gradient(rgba(245,246,255,.42),transparent 92%)}
+.b3{background:linear-gradient(rgba(255,214,120,.42),transparent 92%)}
+.glitter{position:absolute;inset:46px 0 14% 0;background:radial-gradient(circle,#fff6c8 0 1.4px,transparent 2.4px) 0 0/97px 83px,radial-gradient(circle,#e9ebf5 0 1.2px,transparent 2.2px) 31px 40px/71px 109px,radial-gradient(circle,#f0cf6a 0 1px,transparent 2px) 14px 22px/53px 61px;animation:tw 3s ease-in-out infinite alternate;opacity:.7}
+.glitter.g2{background-position:50px 20px,10px 70px,40px 5px;animation-duration:4.3s;animation-direction:alternate-reverse}
+.floor{background:linear-gradient(#0000,#000b 96%),repeating-linear-gradient(90deg,#0000 0 69px,#e8c35a66 69px 71px),repeating-linear-gradient(0deg,#0000 0 49px,#c9ccdc44 49px 50px),linear-gradient(#2a1d0e,#171021);border-top:3px solid #f0cf6a}
+.pool{background:radial-gradient(ellipse at 50% 15%,#ffe9a888,transparent 55%),radial-gradient(ellipse at 28% 30%,#f4f4fa44,transparent 40%),radial-gradient(ellipse at 74% 30%,#f0cf6a44,transparent 40%)}
+.scroller{border-color:#e8c35a66;box-shadow:0 0 0 1px #f1f2fa22 inset,0 10px 40px #000a,0 0 30px #e8c35a22}
+#end{border-color:#f0cf6a;box-shadow:0 0 30px #e8c35a44}
+@media(prefers-reduced-motion:reduce){.logo .star,.mball::after,.glitter{animation:none}}
+.sub{margin:1.1rem 0 1rem}
