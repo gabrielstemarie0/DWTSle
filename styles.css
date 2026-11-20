@@ -1,7 +1,7 @@
 :root{--bg:#0f0a1f;--panel:#1a1233;--ink:#f6f1ff;--mute:#a79cc7;--gold:#e8c35a;--g:#2f9e57;--y:#c9a227;--n:#5b5b63;--line:#2d2450}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at 50% -10%,#2a1a5e,var(--bg) 60%) fixed;color:var(--ink);font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
-header{text-align:center;padding:24px 16px 8px}
+body{margin:0;background:#07040f;color:var(--ink);font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+header{text-align:center;padding:120px 16px 8px}
 h1{margin:0;font-size:clamp(2rem,6vw,3rem);letter-spacing:.02em;font-family:Georgia,serif}
 h1 span{color:var(--gold)}
 .sub{margin:.25rem 0 1rem;color:var(--mute)}
@@ -9,7 +9,7 @@ h1 span{color:var(--gold)}
 button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:8px}
 button:hover{border-color:var(--gold)}
 button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-main{max-width:960px;margin:0 auto;padding:8px 16px 48px}
+main{max-width:960px;margin:0 auto;padding:8px 16px 120px}
 #guess-form{display:flex;gap:8px;max-width:520px;margin:12px auto 0}
 .combo{position:relative;flex:1}
 input{width:100%;padding:11px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit}
@@ -40,3 +40,26 @@ dialog::backdrop{background:#000a}
 .cell{padding:6px 10px;border-radius:6px;font-weight:600;font-size:.85rem}
 .cell.g{background:var(--g)}.cell.y{background:var(--y);color:#1d1600}.cell.n{background:var(--n)}
 .fine{color:var(--mute);font-size:.8rem}
+
+/* ---- stage ---- */
+header,main{position:relative;z-index:1}
+.stage{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:linear-gradient(#05030c,#170b30 55%,#0a0517)}
+.valance{position:absolute;top:0;left:0;right:0;height:46px;background:linear-gradient(#3a0613,#7d1029);border-bottom:3px solid #c9a227;box-shadow:0 6px 18px #000a}
+.valance::after{content:"";position:absolute;left:0;right:0;top:100%;height:16px;background:radial-gradient(circle at 20px 0,#7d1029 17px,transparent 18px) 0 0/40px 16px repeat-x;filter:drop-shadow(0 3px 2px #0008)}
+.curtain{position:absolute;top:0;bottom:16%;width:clamp(36px,11vw,160px);background:repeating-linear-gradient(90deg,#4a0818 0 12px,#8f1432 12px 26px,#5c0a1e 26px 38px)}
+.curtain::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0009,transparent 45%,#0009)}
+.curtain.l{left:0;box-shadow:12px 0 30px #000b;border-radius:0 0 60% 0/0 0 14% 0}
+.curtain.r{right:0;box-shadow:-12px 0 30px #000b;border-radius:0 0 0 60%/0 0 0 14%}
+.beam{position:absolute;top:30px;width:34vw;height:78%;transform-origin:50% 0;clip-path:polygon(47% 0,53% 0,100% 100%,0 100%);mix-blend-mode:screen;opacity:.8}
+.b1{left:6%;background:linear-gradient(rgba(255,214,120,.38),transparent 92%);animation:sway 9s ease-in-out infinite alternate}
+.b2{left:33%;background:linear-gradient(rgba(255,120,200,.3),transparent 92%);animation:sway 11s ease-in-out infinite alternate-reverse}
+.b3{right:6%;background:linear-gradient(rgba(110,200,255,.3),transparent 92%);animation:sway 10s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+.ball{position:absolute;top:44px;left:50%;width:64px;height:64px;margin-left:-32px;border-radius:50%;background:radial-gradient(circle at 34% 28%,#fff,#c9c9d6 28%,#6d6d80 66%,#2c2c3a);box-shadow:0 0 40px 8px #ffffff40}
+.ball::before{content:"";position:absolute;left:50%;bottom:100%;width:2px;height:60px;background:#aaa8}
+.ball::after{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(0deg,#0006 0 1px,transparent 1px 8px),repeating-linear-gradient(90deg,#0006 0 1px,transparent 1px 8px);animation:glint 3s linear infinite alternate}
+@keyframes glint{from{opacity:.55}to{opacity:1}}
+.floor{position:absolute;left:-10%;right:-10%;bottom:0;height:26%;background:linear-gradient(#0000,#000a 95%),repeating-linear-gradient(90deg,#4d2f1b 0 70px,#3a2213 70px 72px),#3a2213;transform:perspective(420px) rotateX(48deg);transform-origin:50% 100%;border-top:2px solid #c9a22780}
+.pool{position:absolute;left:12%;right:12%;top:0;bottom:0;background:radial-gradient(ellipse at 50% 20%,#ffe8a655,transparent 65%)}
+.scroller{background:#0b0618c0;border:1px solid var(--line);border-radius:12px;padding:10px;backdrop-filter:blur(3px)}
+@media(prefers-reduced-motion:reduce){.beam,.ball::after{animation:none}}
