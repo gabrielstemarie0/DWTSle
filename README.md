@@ -1,4 +1,4 @@
-# Ballroomdle
+# DWTStardles
 
 A daily Dancing with the Stars (US) guessing game. Guess the mystery celebrity; each guess compares 7 categories (season, known as, gender, age, pro partner, finish, premiere). Green = match, yellow = close, gray = no match.
 

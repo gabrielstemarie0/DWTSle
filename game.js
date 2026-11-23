@@ -124,7 +124,7 @@
   $("mode-btn").addEventListener("click", () => { input.disabled = false; start(mode === "daily" ? "practice" : "daily"); });
   $("again").addEventListener("click", () => { input.disabled = false; start("practice"); });
   $("share").addEventListener("click", async () => {
-    const text = `Ballroomdle ${mode === "daily" ? dayKey() : "(practice)"} ${guesses.length} guesses\n` + [...guesses].map(emoji).join("\n");
+    const text = `DWTStardles ${mode === "daily" ? dayKey() : "(practice)"} ${guesses.length} guesses\n` + [...guesses].map(emoji).join("\n");
     try { await navigator.clipboard.writeText(text); statusEl.textContent = "Copied!"; } catch { statusEl.textContent = text; }
   });
 
