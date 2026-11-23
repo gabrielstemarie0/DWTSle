@@ -15,7 +15,7 @@
   // ----- state -----
   const dayKey = () => { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
   const hash = (s) => { let h = 2166136261; for (const ch of s) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; };
-  let mode = "daily", answer, guesses = [], done = false;
+  let mode = "daily", answer, guesses = [], done = false, hints = { pro: false, ini: false };
   const store = {
     get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
@@ -25,16 +25,17 @@
   function start(m) {
     mode = m;
     $("mode-btn").textContent = m === "daily" ? "Daily" : "Practice";
-    guesses = []; done = false; $("end").hidden = true; $("again").hidden = m === "daily";
+    guesses = []; done = false; hints = { pro: false, ini: false }; $("end").hidden = true; $("again").hidden = m === "daily";
     grid.querySelectorAll(".row:not(.head)").forEach((r) => r.remove());
     statusEl.textContent = "";
     if (m === "daily") {
       answer = dailyAnswer();
       const saved = store.get("bd-daily");
-      if (saved && saved.day === dayKey()) saved.names.forEach((n) => addGuess(C.find((c) => c.n === n), false));
+      if (saved && saved.day === dayKey()) { hints = Object.assign(hints, saved.hints || {}); saved.names.forEach((n) => addGuess(C.find((c) => c.n === n), false)); }
     } else {
       answer = C[POOL[Math.floor(Math.random() * POOL.length)]];
     }
+    updateHints();
   }
 
   // ----- comparison -----
@@ -51,13 +52,13 @@
       { cls: same ? "g" : shared ? "y" : "n", text: g.p.join(" / ") },
       { cls: g.g === answer.g ? "g" : "n", text: g.g },
       num(g.a, answer.a, 5),
-      { cls: g.pro === answer.pro ? "g" : "n", text: g.pro },
       num(g.pl, answer.pl, 2),
       { cls: g.sn === answer.sn ? "g" : "n", text: g.sn },
     ];
   }
   function addGuess(g, animate = true) {
     guesses.push(g);
+    updateHints();
     const row = document.createElement("div"); row.className = "row";
     compare(g).forEach((c, i) => {
       const d = document.createElement("div");
@@ -73,11 +74,32 @@
   function emoji(g) { return compare(g).slice(1).map((c) => ({ g: "🟩", y: "🟨", n: "⬜" })[c.cls]).join(""); }
 
   function finish(won) {
-    done = true; $("end").hidden = false;
+    done = true; $("end").hidden = false; updateHints();
     $("end-title").textContent = won ? "You found them!" : "";
     $("end-text").textContent = `${answer.n}: season ${answer.s}, finished ${answer.pl === 1 ? "1st (Mirrorball champion)" : "#" + answer.pl}. Solved in ${guesses.length} guess${guesses.length === 1 ? "" : "es"}.`;
     input.disabled = true;
   }
+
+  // ----- hints -----
+  const PRO_AT = 5, INI_AT = 10;
+  function initials(n) {
+    const words = n.replace(/"[^"]*"/g, " ").replace(/\./g, ". ").trim().split(/\s+/).filter(Boolean);
+    return words.map((w) => Array.from(w)[0].toUpperCase() + ".").join(" ");
+  }
+  function saveDaily() { if (mode === "daily") store.set("bd-daily", { day: dayKey(), names: guesses.map((x) => x.n), hints }); }
+  function paintHint(btn, shown, at, label, value) {
+    const left = at - guesses.length;
+    btn.classList.toggle("on", shown); btn.classList.toggle("ready", !shown && left <= 0 && !done);
+    if (shown) { btn.disabled = true; btn.innerHTML = `<span>${label}</span><strong></strong>`; btn.querySelector("strong").textContent = value; }
+    else if (left > 0) { btn.disabled = true; btn.innerHTML = `<span>${label} hint</span><small>unlocks in ${left} guess${left === 1 ? "" : "es"}</small>`; }
+    else { btn.disabled = done; btn.innerHTML = `<span>${label} hint</span><small>${done ? "game over" : "tap to reveal"}</small>`; }
+  }
+  function updateHints() {
+    paintHint($("hint-pro"), hints.pro, PRO_AT, "Pro partner", answer.pro);
+    paintHint($("hint-ini"), hints.ini, INI_AT, "Initials", initials(answer.n));
+  }
+  $("hint-pro").addEventListener("click", () => { if (guesses.length >= PRO_AT && !done) { hints.pro = true; updateHints(); saveDaily(); } });
+  $("hint-ini").addEventListener("click", () => { if (guesses.length >= INI_AT && !done) { hints.ini = true; updateHints(); saveDaily(); } });
 
   // ----- autocomplete -----
   let matches = [], sel = -1;
@@ -103,7 +125,7 @@
     if (done || !g) { if (!g) statusEl.textContent = "Pick a name from the list."; return; }
     input.value = ""; render(); statusEl.textContent = "";
     addGuess(g);
-    if (mode === "daily") store.set("bd-daily", { day: dayKey(), names: guesses.map((x) => x.n) });
+    if (mode === "daily") saveDaily();
   }
   input.addEventListener("input", render);
   input.addEventListener("keydown", (e) => {
@@ -128,6 +150,6 @@
     try { await navigator.clipboard.writeText(text); statusEl.textContent = "Copied!"; } catch { statusEl.textContent = text; }
   });
 
-  start("daily");
+  start("daily"); updateHints();
   if (!store.get("bd-seen")) { store.set("bd-seen", 1); $("help").showModal(); }
 })();
