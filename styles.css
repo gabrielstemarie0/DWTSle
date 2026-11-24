@@ -107,3 +107,16 @@ header{padding-top:84px}
 .hint.on{opacity:1;background:linear-gradient(#3b2d10,#1a1233);border-color:#f0cf6a}
 .hint.on strong{font-size:1.05rem;color:#fff3b8}
 @media(prefers-reduced-motion:reduce){.hint.ready{animation:none}}
+
+/* Back to Station Originals: identical in every Daily Station Original (same markup and CSS in each game) */
+.ds-back{display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px;padding:4px 8px;border-radius:9px;background:#fff;color:#1d2433;text-decoration:none;border:2px solid #1d2433;box-shadow:0 4px 10px rgba(0,0,0,.25);font:900 8.5px/1.1 system-ui,-apple-system,sans-serif;letter-spacing:.05em;white-space:nowrap;flex:none}
+.ds-back span+span{font-size:10px;letter-spacing:.06em}
+.ds-back:hover,.ds-back:focus-visible{background:#f2b632}
+.origin{position:relative;z-index:3;width:100%;box-sizing:border-box;max-width:720px;margin:0 auto;padding:10px 16px 0}
+/* hand-off to the next Daily Station Original */
+.next{display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:12px;margin-top:16px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-align:left;text-decoration:none;color:var(--ink);background:linear-gradient(90deg,rgba(232,195,90,.14),transparent)}
+.next:hover{border-color:var(--gold)}
+.next-k{grid-column:1;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+.next-n{grid-column:1;font-size:16px;font-weight:700}
+.next-d{grid-column:1;font-size:12.5px;color:var(--mute)}
+.next-go{grid-column:2;grid-row:1/4;font-size:20px;color:var(--gold)}

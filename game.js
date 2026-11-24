@@ -75,6 +75,15 @@
 
   function finish(won) {
     done = true; $("end").hidden = false; updateHints();
+    // daily streak, read by The Daily Station's Originals page (same site, same storage)
+    if (mode === "daily") {
+      const st = store.get("bd-stats") || { last: null, streak: 0 };
+      if (st.last !== dayKey()) {
+        const y = new Date(); y.setDate(y.getDate() - 1);
+        const yKey = `${y.getFullYear()}-${y.getMonth() + 1}-${y.getDate()}`;
+        st.streak = st.last === yKey ? st.streak + 1 : 1; st.last = dayKey(); store.set("bd-stats", st);
+      }
+    }
     $("end-title").textContent = won ? "You found them!" : "";
     $("end-text").textContent = `${answer.n}: season ${answer.s}, finished ${answer.pl === 1 ? "1st (Mirrorball champion)" : "#" + answer.pl}. Solved in ${guesses.length} guess${guesses.length === 1 ? "" : "es"}.`;
     input.disabled = true;
@@ -86,7 +95,7 @@
     const words = n.replace(/"[^"]*"/g, " ").replace(/\./g, ". ").trim().split(/\s+/).filter(Boolean);
     return words.map((w) => Array.from(w)[0].toUpperCase() + ".").join(" ");
   }
-  function saveDaily() { if (mode === "daily") store.set("bd-daily", { day: dayKey(), names: guesses.map((x) => x.n), hints }); }
+  function saveDaily() { if (mode === "daily") store.set("bd-daily", { day: dayKey(), names: guesses.map((x) => x.n), hints, done }); }
   function paintHint(btn, shown, at, label, value) {
     const left = at - guesses.length;
     btn.classList.toggle("on", shown); btn.classList.toggle("ready", !shown && left <= 0 && !done);
@@ -146,7 +155,7 @@
   $("mode-btn").addEventListener("click", () => { input.disabled = false; start(mode === "daily" ? "practice" : "daily"); });
   $("again").addEventListener("click", () => { input.disabled = false; start("practice"); });
   $("share").addEventListener("click", async () => {
-    const text = `DWTStardles ${mode === "daily" ? dayKey() : "(practice)"} ${guesses.length} guesses\n` + [...guesses].map(emoji).join("\n");
+    const text = `DWTStardles ${mode === "daily" ? dayKey() : "(practice)"} ${guesses.length} guesses\n` + [...guesses].map(emoji).join("\n") + "\nthedailystation.com/dwtstardles";
     try { await navigator.clipboard.writeText(text); statusEl.textContent = "Copied!"; } catch { statusEl.textContent = text; }
   });
 
